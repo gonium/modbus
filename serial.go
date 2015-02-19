@@ -14,8 +14,8 @@ const (
 	serialTimeoutMillis = 5000
 )
 
-// serialConfig is common configuration for serial port.
-type serialConfig struct {
+// SerialConfig is the common configuration for serial port.
+type SerialConfig struct {
 	// Device path (/dev/ttyS0)
 	Address string
 	// Baud rate (default 19200)
@@ -42,7 +42,7 @@ type serialController interface {
 // implicitly implement serialController interface.
 type serialTransporter struct {
 	// Serial port configuration.
-	serialConfig
+	SerialConfig
 	// serialPort is platform-dependent data structure for serial port.
 	serialPort
 
@@ -53,3 +53,8 @@ type serialTransporter struct {
 
 // Ensure serialTransporter also implements serialController interface.
 var _ serialController = (*serialTransporter)(nil)
+
+// SetSerialConfig allows a same configuration can be set for both RTU & ASCII handler.
+func (serial *serialTransporter) SetSerialConfig(config SerialConfig) {
+	serial.SerialConfig = config
+}

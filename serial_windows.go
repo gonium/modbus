@@ -27,7 +27,7 @@ func (mb *serialTransporter) Connect() (err error) {
 	if mb.Timeout <= 0 {
 		mb.Timeout = serialTimeoutMillis * time.Millisecond
 	}
-	handle, err := newHandle(&mb.serialConfig)
+	handle, err := newHandle(&mb.SerialConfig)
 	if err != nil {
 		return
 	}
@@ -93,7 +93,7 @@ func (mb *serialTransporter) write(b []byte) (n int, err error) {
 	return
 }
 
-func newHandle(config *serialConfig) (handle syscall.Handle, err error) {
+func newHandle(config *SerialConfig) (handle syscall.Handle, err error) {
 	handle, err = syscall.CreateFile(
 		syscall.StringToUTF16Ptr(config.Address),
 		syscall.GENERIC_READ|syscall.GENERIC_WRITE,

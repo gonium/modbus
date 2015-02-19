@@ -71,7 +71,7 @@ func (mb *serialTransporter) Connect() (err error) {
 	if mb.Timeout <= 0 {
 		mb.Timeout = serialTimeoutMillis * time.Millisecond
 	}
-	termios, err := newTermios(&mb.serialConfig)
+	termios, err := newTermios(&mb.SerialConfig)
 	if err != nil {
 		return
 	}
@@ -169,7 +169,7 @@ func (mb *serialTransporter) restoreTermios() {
 
 // Helpers for termios
 
-func newTermios(config *serialConfig) (termios *syscall.Termios, err error) {
+func newTermios(config *SerialConfig) (termios *syscall.Termios, err error) {
 	termios = &syscall.Termios{}
 	var flag uint32
 	// Baud rate
